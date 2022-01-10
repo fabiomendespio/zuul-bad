@@ -31,6 +31,14 @@ public class Parser
     }
 
     /**
+     * Print out a list of valid command words.
+     */
+    public void showCommands()
+    {
+        commands.showAll();
+    }
+
+    /**
      * @return The next command from the user.
      */
     public Command getCommand() 
