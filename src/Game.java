@@ -196,8 +196,7 @@ public class Game
     {
         System.out.println("Continue investigando, a solução é elementar!");
         System.out.println();
-        System.out.println("Os comandos são:");
-        parser.showCommands();
+        System.out.println(parser.showCommands());
     }
 
     private void falar()
