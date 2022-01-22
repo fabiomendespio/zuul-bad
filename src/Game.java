@@ -21,6 +21,7 @@ public class Game
     private Room currentRoom;
 
 
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -36,7 +37,9 @@ public class Game
     private void createRooms()
     {
         Room entrada, jardim, hall, salao_principal, sala_de_estar, sala_de_jantar, cozinha, salao_de_festas, sala_de_visitas, salao_de_jogos, biblioteca, escritorio, sala_secreta;
-      
+
+        Item castical, chave_inglesa;
+
         // create the rooms
         entrada = new Room("na entrada em frente da mansão ");
         jardim = new Room("no jardim");
@@ -51,6 +54,9 @@ public class Game
         biblioteca = new Room("na biblioteca");
         escritorio = new Room("no escritório");
         sala_secreta = new Room("na sala secreta");
+
+        castical = new Item("castical", 2);
+        chave_inglesa = new Item("chave_inglesa", 5);
         
         // initialise room exits
 //        entrada.setExits(null, jardim, hall, null, sala_secreta, null);
@@ -107,6 +113,11 @@ public class Game
 
         salao_de_jogos.setExit("leste", salao_de_festas);
 
+        entrada.addItens(castical);
+        entrada.addItens(chave_inglesa);
+        sala_secreta.addItens(chave_inglesa);
+
+
         currentRoom = entrada; // start game outside
     }
 
@@ -146,6 +157,7 @@ public class Game
         System.out.println("Você precisa descobrir quem comenteu o assassinato, com qual arma e o local do crime.");
         System.out.println("Escreva 'ajuda' se você precisar de ajuda.");
         System.out.println();
+
 
         System.out.println(currentRoom.getLongDescription());
     }

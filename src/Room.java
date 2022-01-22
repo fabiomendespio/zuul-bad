@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Set;
 
@@ -19,6 +20,25 @@ public class Room
 {
     private String description;
     private HashMap<String, Room> exits;
+    private Item item;
+    private ArrayList<Item> itens = new ArrayList<>();
+
+    public String getListItems(){
+        String result = "";
+
+        for (Item itemRoom : itens) {
+            result += itemRoom.itemDescriptionSttring();
+        }
+            if(result.isEmpty() ){
+                return "sem itens aqui";
+            }
+        return result;
+    }
+
+    public void addItens(Item item){
+        if(item != null)
+            itens.add(item);
+    }
 
     /**
      * Create a room described "description "Initially, it
@@ -59,93 +79,12 @@ public class Room
         return description;
     }
 
-//    private String description;
-//    private Room northExit;
-//    private Room southExit;
-//    private Room eastExit;
-//    private Room westExit;
-//    private Room upExit;
-//    private Room downExit;
-//    public Room currentRoom;
-//
-//    /**
-//     * Create a room described "description". Initially, it has
-//     * no exits. "description" is something like "a kitchen" or
-//     * "an open court yard".
-//     * @param description The room's description.
-//     */
-//    public Room(String description)
-//    {
-//        this.description = description;
-//    }
-//
-//    /**
-//     * Define the exits of this room.  Every direction either leads
-//     * to another room or is null (no exit there).
-//     * @param norte The north exit.
-//     * @param leste The east east.
-//     * @param sul The south exit.
-//     * @param oeste The west exit.
-//     */
-//    public void setExits(Room norte, Room leste, Room sul, Room oeste, Room cima, Room baixo)
-//    {
-//        if(norte != null) {
-//            northExit = norte;
-//        }
-//        if(leste != null) {
-//            eastExit = leste;
-//        }
-//        if(sul != null) {
-//            southExit = sul;
-//        }
-//        if(oeste != null) {
-//            westExit = oeste;
-//        }
-//        if(cima != null) {
-//            upExit = cima;
-//        }
-//        if(baixo != null) {
-//            downExit = baixo;
-//        }
-//    }
-//
-//    /**
-//     * @return The description of the room.
-//     */
-//    public String getDescription()
-//    {
-//        return description;
-//    }
-//
-//    public Room getExit(String direction)
-//    {
-//        if(direction.equals("norte")) {
-//            return northExit;
-//        }
-//        if(direction.equals("leste")) {
-//            return eastExit;
-//        }
-//        if(direction.equals("sul")) {
-//            return southExit;
-//        }
-//        if(direction.equals("oeste")) {
-//            return westExit;
-//        }
-//        if(direction.equals("cima")) {
-//            return upExit;
-//        }
-//        if(direction.equals("baixo")) {
-//            return downExit;
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * Return a description of the room’s exits,
-//     * for example, "Exits: north west".
-//     * @return A description of the available exits.
-//     */
-//
+
+    /**
+     * Return a description of the room’s exits,
+     * for example, "Exits: north west".
+     * @return A description of the available exits.
+     */
     public String getExitString()
     {
         String returnString = "Saídas:";
@@ -156,7 +95,6 @@ public class Room
         return returnString;
     }
 
-
     /**
      * Return a long description of this room, of the form:
      * You are in the kitchen.
@@ -165,6 +103,8 @@ public class Room
      */
     public String getLongDescription()
     {
-        return "Você está " + description + ".\n" + getExitString();
+
+        return "Você está " + description + ".\n" + getExitString() + ".\n" + "Itens: " + getListItems();
     }
+
 }
