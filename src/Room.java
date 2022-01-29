@@ -16,29 +16,56 @@ import java.util.Set;
  * @author  Michael Kölling and David J. Barnes
  * @version 2016.02.29
  */
-public class Room 
-{
+public class Room {
     private String description;
     private HashMap<String, Room> exits;
     private Item item;
     private ArrayList<Item> itens = new ArrayList<>();
 
-    public String getListItems(){
+    public String getListNameItens() {
         String result = "";
 
-        for (Item itemRoom : itens) {
-            result += itemRoom.itemDescriptionSttring();
+        if (itens.isEmpty()) {
+            return "sem itens aqui";
         }
-            if(result.isEmpty() ){
-                return "sem itens aqui";
-            }
+        for (Item itemRoom : itens) {
+            result += itemRoom.getItemName();
+        }
+
         return result;
     }
 
-    public void addItens(Item item){
-        if(item != null)
+    public String getListDescriptionItens() {
+        String result = "";
+
+        if (itens.isEmpty()) {
+            return "sem itens aqui";
+        }
+        for (Item itemRoom : itens) {
+            result += itemRoom.getItemDescription();
+        }
+
+        return result;
+    }
+
+    public void addItens(Item item) {
+        if (item != null)
             itens.add(item);
     }
+
+    public ArrayList getItemList() {
+        return itens;
+    }
+
+    public Item getItem() {
+        return item;
+    }
+
+    public void removeItemList() {
+        itens.remove(0);
+    }
+
+
 
     /**
      * Create a room described "description "Initially, it
@@ -90,7 +117,7 @@ public class Room
         String returnString = "Saídas:";
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
-            returnString += " " + exit;
+            returnString += "[" + exit + "] ";
         }
         return returnString;
     }
@@ -104,7 +131,7 @@ public class Room
     public String getLongDescription()
     {
 
-        return "Você está " + description + ".\n" + getExitString() + ".\n" + "Itens: " + getListItems();
+        return "Você está " + description + "\n" + getExitString() + "\n" + "Itens encontrados: " + getListNameItens();
     }
 
 }
