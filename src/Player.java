@@ -23,18 +23,7 @@ public class Player
         // escreva seu código aqui
     
     }
-    
-    public void pickUpItem()
-    {
-        for(int i=0; i< currentRoom.getItemList().size(); i++) {
-            bolsa.add(currentRoom.getItem());
-        }
-        System.out.println(bolsa);
-        currentRoom.removeItemList();
 
-    }
-
-    
     public Room getCurrentRoom(){
         return currentRoom;
     }
@@ -43,7 +32,29 @@ public class Player
         this.currentRoom = currentRoom;
     }
     
-        public String getCurrentRoomDescription(){
+    public String getCurrentRoomDescription(){
         return currentRoom.getLongDescription();
     }
+    
+    public void pickUpItem()
+    {
+        
+        bolsa.add(currentRoom.getItem());
+        currentRoom.removeItemList();
+    }
+    
+    public String getBag() 
+    {
+        String result = "";
+
+        if (bolsa.isEmpty()) {
+            return "sem itens aqui";
+        }
+        for (Item itemBag : bolsa) {
+            result += itemBag.getItemName();
+        }
+
+        return result;
+    }
+
 }
