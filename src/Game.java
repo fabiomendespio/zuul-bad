@@ -207,15 +207,25 @@ public class Game
 
     private void pegar(Command command)
     {
-        if(command.hasSecondWord()) {
+        if(!command.hasSecondWord()) {
             // if there is no second word, we don't know where to go...
-            System.out.println("apenas digite pegar");
+            System.out.println("pegar qual item? Digite o nome do item");
             return;
         }
         if(player.getCurrentRoom().getItemList().isEmpty() ){
             System.out.println("não tem itens por aqui");
         }
-        player.pickUpItem();
+        String pegaItem = command.getSecondWord();
+               
+        for(int i = 0; i< player.getCurrentRoom().getItemList().size(); i++)
+        {
+            if (player.getCurrentRoom().getItemList().equals(pegaItem))
+            {
+                player.pickUpItem();
+            }
+        }
+        
+        
 
     }
 
@@ -271,6 +281,10 @@ public class Game
             backStack.pop();
             System.out.println(player.getCurrentRoomDescription());
         }
+    }
+    
+      private void showBag(Command command){
+        System.out.println(player.getBag());
     }
 
     /**
