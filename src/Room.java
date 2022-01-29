@@ -58,7 +58,7 @@ public class Room {
     }
 
     public Item getItem() {
-        return item;
+        return item.get(0);
     }
 
     public void removeItemList() {
