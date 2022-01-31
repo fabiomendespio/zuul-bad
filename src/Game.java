@@ -44,6 +44,7 @@ public class Game
 
         player = new Player ("teste");
 
+
         // create the rooms
         entrada = new Room("na entrada");
         jardim = new Room("no jardim");
@@ -102,7 +103,6 @@ public class Game
         entrada.addItens(castical);
         entrada.addItens(chave_inglesa);
         sala_secreta.addItens(chave_inglesa);
-
 
         player.setCurrentRoom(entrada); // start game outside
     }
@@ -188,6 +188,9 @@ public class Game
         else if (commandWord.equals("soltar")) {
             soltar(command);
         }
+        else if (commandWord.equals("bolsa")) {
+            showBag(command);
+        }
         return wantToQuit;
     }
 
@@ -216,16 +219,7 @@ public class Game
             System.out.println("não tem itens por aqui");
         }
         String pegaItem = command.getSecondWord();
-               
-        for(int i = 0; i< player.getCurrentRoom().getItemList().size(); i++)
-        {
-            if (player.getCurrentRoom().getItemList().equals(pegaItem))
-            {
-                player.pickUpItem();
-            }
-        }
-        
-        
+        player.pickUpItem(pegaItem);
 
     }
 

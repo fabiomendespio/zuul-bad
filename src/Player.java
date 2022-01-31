@@ -36,17 +36,23 @@ public class Player
         return currentRoom.getLongDescription();
     }
     
-    public void pickUpItem()
+    public void pickUpItem(String pegaItem)
     {
-        
-        bolsa.add(currentRoom.getItem());
-        currentRoom.removeItemList();
+        int i;
+        for(i = 0; i< currentRoom.getItemList().size(); i++) {
+
+            if (currentRoom.getItemList().equals(pegaItem)) {
+
+                bolsa.add(currentRoom);
+                currentRoom.removeItemList(i);
+            }
+        }
     }
+
     
-    public String getBag() 
+    public String getBag()
     {
         String result = "";
-
         if (bolsa.isEmpty()) {
             return "sem itens aqui";
         }

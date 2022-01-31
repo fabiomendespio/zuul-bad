@@ -57,12 +57,12 @@ public class Room {
         return itens;
     }
 
-    public Item getItem() {
-        return item.get(0);
+    public Item getItem(Item item) {
+        return item;
     }
 
-    public void removeItemList() {
-        itens.remove(0);
+    public void removeItemList(int i) {
+        itens.remove(i);
     }
 
 
