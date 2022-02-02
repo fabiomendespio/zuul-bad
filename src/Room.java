@@ -29,7 +29,7 @@ public class Room {
             return "sem itens aqui";
         }
         for (Item itemRoom : itens) {
-            result += itemRoom.getItemName();
+            result += "[" + itemRoom.getItemName() + "] ";
         }
 
         return result;
@@ -53,12 +53,12 @@ public class Room {
             itens.add(item);
     }
 
-    public ArrayList getItemList() {
+    public ArrayList<Item> getItemList() {
         return itens;
     }
 
-    public Item getItem(Item item) {
-        return item;
+    public Item getItem(int i) {
+        return itens.get(i);
     }
 
     public void removeItemList(int i) {

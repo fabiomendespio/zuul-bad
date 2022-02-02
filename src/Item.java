@@ -11,7 +11,11 @@ public class Item {
     }
 
     public String getItemName() {
-        return "[" + itemName  + "] ";
+        return itemName;
+    }
+
+    public int getItemWeight(){
+        return itemWeight;
     }
 
     public String getItemDescription() {

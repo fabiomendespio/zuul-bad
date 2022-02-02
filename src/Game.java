@@ -102,7 +102,7 @@ public class Game
 
         entrada.addItens(castical);
         entrada.addItens(chave_inglesa);
-        sala_secreta.addItens(chave_inglesa);
+        hall.addItens(chave_inglesa);
 
         player.setCurrentRoom(entrada); // start game outside
     }
@@ -211,26 +211,35 @@ public class Game
     private void pegar(Command command)
     {
         if(!command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
+
             System.out.println("pegar qual item? Digite o nome do item");
             return;
         }
         if(player.getCurrentRoom().getItemList().isEmpty() ){
             System.out.println("não tem itens por aqui");
         }
-        String pegaItem = command.getSecondWord();
-        player.pickUpItem(pegaItem);
+        if(player.checkWeight() < player.getMaxWeightCarry()){
+            String pegaItem = command.getSecondWord();
+            player.pickUpItem(pegaItem);
+        }else{
+            System.out.println("sua bolsa está cheia, solte algum item");
+        }
+
 
     }
 
     private void soltar(Command command)
     {
-        if(command.hasSecondWord()) {
-            // if there is no second word, we don't know where to go...
-            System.out.println("apenas digite soltar");
+        if(!command.hasSecondWord()) {
+
+            System.out.println("soltar qual item? Digite o nome do item");
             return;
         }
-        player.dropItem();
+        if(player.getBag().isEmpty() ){
+            System.out.println("não tem itens na bolsa");
+        }
+        String soltaItem = command.getSecondWord();
+        player.dropItem(soltaItem);
     }
 
     private void falar(Command command)
