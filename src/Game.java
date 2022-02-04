@@ -22,6 +22,7 @@ public class Game
     private Parser parser;
     private Player player;
     private Stack<Room> backStack = new Stack<Room>();
+    private CommandWords word = new CommandWords();
 
 
     /**
@@ -61,7 +62,7 @@ public class Game
         sala_secreta = new Room("na sala secreta");
 
         castical = new Item("castical", "um artefato antigo", 2);
-        chave_inglesa = new Item("chave_inglesa", "uma ferramenta suja", 5);
+        chave_inglesa = new Item("chave_inglesa", "uma ferramenta suja", 2);
 
         entrada.setExit("leste", jardim);
         entrada.setExit("sul", hall);
@@ -102,6 +103,7 @@ public class Game
 
         entrada.addItens(castical);
         entrada.addItens(chave_inglesa);
+        hall.addItens(castical);
         hall.addItens(chave_inglesa);
 
         player.setCurrentRoom(entrada); // start game outside
@@ -141,7 +143,10 @@ public class Game
         System.out.println("Você é um detetive que investiga um assassinato em uma mansão!");
         System.out.println("Procure pistas pela mansão, interrogue os suspeitos e deduza o mistério.");
         System.out.println("Você precisa descobrir quem comenteu o assassinato, com qual arma e o local do crime.");
-        System.out.println("Escreva 'ajuda' se você precisar de ajuda.");
+        System.out.print("Se precisar escreva ") ;
+        word.getKeyHash(CommandWord.HELP);
+
+
         System.out.println();
 
 
@@ -157,46 +162,56 @@ public class Game
     private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
+        CommandWord commandWord = command.getCommandWord();
+                switch (commandWord) {
+            case UNKNOWN:
+                System.out.println("O comando parece errado...digite ajuda se precisar");
+                break;
 
-        if(command.isUnknown()) {
-            System.out.println("O comando parece errado...digite ajuda se precisar");
-            return false;
-        }
+            case HELP:
+                printHelp();
+                break;
 
-        String commandWord = command.getCommandWord();
-        if (commandWord.equals("ajuda")) {
-            printHelp();
-        }
-        else if (commandWord.equals("para")) {
-            goRoom(command);
-        }
-        else if (commandWord.equals("sair")) {
-            wantToQuit = quit(command);
-        }
-        else if (commandWord.equals("investigar")) {
-            investigar(command);
-        }
-        else if (commandWord.equals("falar")) {
-            falar(command);
-        }
-        else if (commandWord.equals("voltar")) {
-            voltar(command);
-        }
-        else if (commandWord.equals("pegar")) {
-            pegar(command);
-        }
-        else if (commandWord.equals("soltar")) {
-            soltar(command);
-        }
-        else if (commandWord.equals("bolsa")) {
-            showBag(command);
+            case GO:
+                goRoom(command);
+                break;
+
+            case QUIT:
+                wantToQuit = quit(command);
+                break;
+                
+            case INVESTIGATE:
+                investigar(command);
+                break;   
+                
+            case TALK:
+                falar(command);
+                break;
+                
+            case TAKE:
+                pegar(command);
+                break; 
+                
+            case BACK:
+                voltar(command);
+                break;
+                
+            case DROP:
+                soltar(command);
+                break;
+                
+            case BAG:
+                showBag(command);
+                break;
+
+            case LOOK:
+                lookAround(command);
+                break;
         }
         return wantToQuit;
     }
 
-    // implementations of user commands:
-
-    /**
+     /**
      * Print out some help information.
      * Here we print some stupid, cryptic message and a list of the
      * command words.
@@ -205,27 +220,32 @@ public class Game
     {
         System.out.println("Continue investigando, a solução é elementar!");
         System.out.println();
-        System.out.println(parser.showCommands());
+        parser.showCommands();
     }
 
     private void pegar(Command command)
     {
+        
+        String pegaItem = command.getSecondWord();
         if(!command.hasSecondWord()) {
 
             System.out.println("pegar qual item? Digite o nome do item");
             return;
         }
         if(player.getCurrentRoom().getItemList().isEmpty() ){
-            System.out.println("não tem itens por aqui");
+            System.out.println("não tem itens para pegar aqui");
         }
-        if(player.checkWeight() < player.getMaxWeightCarry()){
-            String pegaItem = command.getSecondWord();
-            player.pickUpItem(pegaItem);
-        }else{
-            System.out.println("sua bolsa está cheia, solte algum item");
+        
+        player.pickUpItem(pegaItem);
+    }
+
+    private void lookAround(Command command){
+        if(!command.hasSecondWord()) {
+
+            System.out.println("Digite apenas olhar");
+            return;
         }
-
-
+        System.out.println(player.getCurrentRoom().getLongDescription());
     }
 
     private void soltar(Command command)

@@ -22,6 +22,8 @@ public class Room {
     private Item item;
     private ArrayList<Item> itens = new ArrayList<>();
 
+    private HashMap<String, Direction> validDirection;
+
     public String getListNameItens() {
         String result = "";
 
@@ -65,15 +67,19 @@ public class Room {
         itens.remove(i);
     }
 
-
+//    public Room(){
+//        validDirection.put("norte", Direction.NORTH);
+//        validDirection.put("leste", Direction.EAST);
+//        validDirection.put("sul", Direction.SOUTH);
+//        validDirection.put("oeste", Direction.WEST);
+//    }
 
     /**
      * Create a room described "description "Initially, it
      * has no exits. "description" is something like "a
      * kitchen" or "an open courtyard".
      */
-    public Room(String description)
-    {
+    public Room(String description) {
         this.description = description;
         exits = new HashMap<String, Room>();
     }
@@ -97,6 +103,7 @@ public class Room {
     {
         return exits.get(direction);
     }
+
     /**
      * Return the description of the room (the one that was
      * defined in the constructor).
@@ -106,14 +113,12 @@ public class Room {
         return description;
     }
 
-
     /**
      * Return a description of the room’s exits,
      * for example, "Exits: north west".
      * @return A description of the available exits.
      */
-    public String getExitString()
-    {
+    public String getExitString() {
         String returnString = "Saídas:";
         Set<String> keys = exits.keySet();
         for(String exit : keys) {
@@ -128,10 +133,8 @@ public class Room {
      * Exits: north west
      * @return A description of the room, including exits.
      */
-    public String getLongDescription()
-    {
+    public String getLongDescription() {
 
         return "Você está " + description + "\n" + getExitString() + "\n" + "Itens encontrados: " + getListNameItens();
     }
-
 }

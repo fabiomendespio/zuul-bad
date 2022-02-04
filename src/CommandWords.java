@@ -1,3 +1,4 @@
+import java.util.HashMap;
 /**
  * This class is part of the "World of Zuul" application. 
  * "World of Zuul" is a very simple, text based adventure game.  
@@ -9,45 +10,70 @@
  * @version 2016.02.29
  */
 
-public class CommandWords
-{
-    // a constant array that holds all valid command words
-    private static final String[] validCommands = {
-            "para", "sair", "ajuda", "investigar", "falar", "voltar", "pegar", "soltar", "bolsa"
-    };
+public class CommandWords {
+
+    // A mapping between a command word and the CommandWord
+    // associated with it.
+    private HashMap<String, CommandWord> validCommands;
 
     /**
      * Constructor - initialise the command words.
      */
-    public CommandWords()
-    {
-        // nothing to do at the moment...
+    public CommandWords() {
+        validCommands = new HashMap<>();
+        validCommands.put("para", CommandWord.GO);
+        validCommands.put("ajuda", CommandWord.HELP);
+        validCommands.put("sair", CommandWord.QUIT);
+        validCommands.put("investigar", CommandWord.INVESTIGATE);
+        validCommands.put("falar", CommandWord.TALK);
+        validCommands.put("voltar", CommandWord.BACK);
+        validCommands.put("pegar", CommandWord.TAKE);
+        validCommands.put("soltar", CommandWord.DROP);
+        validCommands.put("bolsa", CommandWord.BAG);
+        validCommands.put("olhar", CommandWord.LOOK);
     }
 
     /**
-     * Check whether a given String is a valid command word. 
-     * @return true if a given string is a valid command,
-     * false if it isn't.
+     * Find the CommandWord associated with a command word.
+     *
+     * @param commandWord The word to look up (as a string).
+     * @return The CommandWord correspondng to commandWord, or UNKNOWN
+     * if it is not a valid command word.
      */
-    public boolean isCommand(String aString)
-    {
-        for(int i = 0; i < validCommands.length; i++) {
-            if(validCommands[i].equals(aString))
-                return true;
+    public CommandWord getCommandWord(String commandWord) {
+        CommandWord command = validCommands.get(commandWord);
+        if (command != null) {
+            return command;
+        } else {
+            return CommandWord.UNKNOWN;
         }
-        // if we get here, the string was not found in the commands
-        return false;
+    }
+
+    /**
+     * Check whether a given String is a valid command word.
+     *
+     * @return true if it is, false if it isn't.
+     */
+    public boolean isCommand(String aString) {
+        return validCommands.containsKey(aString);
     }
 
     /**
      * Print all valid commands to System.out.
      */
-    public String getCommandList()
-    {
-        String returnString = "Comandos: ";
-        for(String command : validCommands) {
-            returnString +=   command + " " ;
+    public void showAll() {
+        for (String command : validCommands.keySet()) {
+            System.out.print(command + "  ");
         }
-        return returnString;
+        System.out.println();
     }
+
+    public void getKeyHash(CommandWord word) {
+            for(String key: validCommands.keySet()) {
+                if(validCommands.get(key).equals(word)) {
+                    System.out.println(key);
+                }
+        }
+    }
+
 }
